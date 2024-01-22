@@ -39,9 +39,12 @@ public class App {
         int[][] mat1,mat2,mat3;
 
         System.out.println("Hello.\nPlease enter file names or\nenter sizes of matrices.\n----------");
-        if(scnr.hasNextInt()){ //checks if input is integer
+
+        //checks if input is an integer or string
+        if(scnr.hasNextInt()){
             usrIn = scnr.nextLine();
 
+            //sets matrices size to the inputed integer and fills them randomly
             int rows = Integer.parseInt(usrIn);
             mat1 = new int[rows][rows];
             mat2 = new int[rows][rows];
