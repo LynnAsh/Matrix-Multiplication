@@ -33,6 +33,17 @@ public class App {
         bw.close();
     }
 
+    public static void printMatrix(int[][] arr,int rows,String matrix){
+        System.out.println("----------\n" + matrix);
+        for(int i=0;i<rows;i++){
+            System.out.print("[ ");
+            for(int k=0;k<rows;k++){
+                System.out.print(arr[i][k] + " ");
+            }
+            System.out.print("]\n");
+        }
+    }
+
     public static void main(String[] args) throws Exception {
         Scanner scnr = new Scanner(System.in);
         String usrIn;
@@ -49,8 +60,13 @@ public class App {
             mat1 = new int[rows][rows];
             mat2 = new int[rows][rows];
             mat3 = new int[rows][rows];
+
             fillMatrix(mat1,rows);
             fillMatrix(mat2,rows);
+            printMatrix(mat1, rows, "Matrix 1");
+            printMatrix(mat2, rows, "Matrix 2");
+            writeToFile(mat1, rows, "matrix1.txt");
+            writeToFile(mat2, rows, "matrix2.txt");
 
             //multiplies mat1 and mat2 to mat3
             for(int i=0;i<rows;i++){
@@ -62,6 +78,7 @@ public class App {
                 }
             }
 
+            printMatrix(mat3, rows, "Matrix 3");
             writeToFile(mat3,rows,"matrix3.txt");
         }else{
             usrIn = scnr.nextLine();
