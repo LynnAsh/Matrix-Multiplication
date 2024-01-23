@@ -1,11 +1,13 @@
 import java.util.Scanner;
 import java.util.Random;
+import java.io.BufferedReader;
 import java.io.BufferedWriter;
+import java.io.FileReader;
 import java.io.FileWriter;
 import java.io.IOException;
 
 public class App {
-    public static void fillMatrix(int[][] arr,int rows){
+    public static void fillMatrix(int[][] arr, int rows){
         System.out.println("Filling matrix.");
         Random rand = new Random();
         for(int i=0;i<rows;i++){
@@ -15,7 +17,7 @@ public class App {
         }
     }
 
-    public static void writeToFile(int[][] arr,int rows,String file) throws IOException{
+    public static void writeToFile(int[][] arr, int rows, String file) throws IOException{
         System.out.println("Writing matrix to file.");
         FileWriter writer = new FileWriter(file);
         BufferedWriter bw = new BufferedWriter(writer);
@@ -32,8 +34,19 @@ public class App {
 
         bw.close();
     }
+    /*
+    public static void readFromFile(String file) throws IOException{
+        BufferedReader reader = new BufferedReader(new FileReader(file));
+        String line;
+        int rows = 0;
+        int cols = 0;
 
-    public static void printMatrix(int[][] arr,int rows,String matrix){
+        while((line = reader.readLine()) != null){
+            String[] elements = line.split(" ");
+        }
+    }
+    */
+    public static void printMatrix(int[][] arr, int rows, String matrix){
         System.out.println("----------\n" + matrix);
         for(int i=0;i<rows;i++){
             System.out.print("[ ");
@@ -41,6 +54,27 @@ public class App {
                 System.out.print(arr[i][k] + " ");
             }
             System.out.print("]\n");
+        }
+    }
+
+    public static void multiplyMatrices(int[][] mat1, int[][] mat2, int[][] mat3){
+        int rows1 = mat1.length;
+        int cols1 = mat1[0].length;
+        int rows2 = mat2.length;
+        int cols2 = mat2[0].length;
+
+        if(cols1 != rows2){
+            System.out.println("Error. Cannot multiply matrices.");
+            return;
+        }
+
+        for(int row=0;row<rows1;row++){
+            for(int col=0;col<cols2;col++){
+                mat3[row][col] = 0;
+                for(int i=0;i<cols1;i++){
+                    mat3[row][col] += mat1[row][i] * mat2[i][col];
+                }
+            }
         }
     }
 
@@ -69,19 +103,19 @@ public class App {
             writeToFile(mat2, rows, "matrix2.txt");
 
             //multiplies mat1 and mat2 to mat3
-            for(int i=0;i<rows;i++){
-                for(int j=0;j<rows;j++){
-                    mat3[i][j] = 0;
-                    for(int k=0;k<rows;k++){
-                        mat3[i][j] += mat1[i][k] * mat2[k][j];
-                    }
-                }
-            }
+            multiplyMatrices(mat1, mat2, mat3);
 
             printMatrix(mat3, rows, "Matrix 3");
             writeToFile(mat3,rows,"matrix3.txt");
         }else{
-            usrIn = scnr.nextLine();
+            /*usrIn = scnr.nextLine();
+
+            //splits file names into two seperate strings
+            String[] files = usrIn.split(" ");
+            String file1 = files[0];
+            String file2 = files[1];
+            
+            */
         }
 
         scnr.close();
